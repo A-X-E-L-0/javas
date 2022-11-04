@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<!-- Fig. 9.7: Dados.html -->
+<!-- Simulación de juego de dados. -->
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>Simulación de juego de dados</title>
+      <style type = "text/css">
+         p.red  { color: red }
+         img    { width: 54px; height: 54px; }
+         div    { border: 5px ridge royalblue; 
+                  padding: 10px; width: 120px; 
+                  margin-bottom: 10px; }
+         .point { margin: 0px; }
+      </style>
+      <script>
+         // variables utilizadas para referirse a los elementos de la página
+         var pointDie1Img; 
+         var pointDie2Img; 
+         var rollDie1Img; 
+         var rollDie2Img; 
+         var messages; 
+         var playButton; 
+         var rollButton; 
+         var dicerolling; 
+
+        
+         var myPoint; 
+         var die1Value; 
+         var die2Value; 
+
+          // get the page elements that we'll interact with
+         function startGame() 
+         {
+          // obtener los elementos de la página con los que interactuaremos
+            dicerolling = document.getElementById( "dicerolling" );
+            pointDie1Img = document.getElementById( "pointDie1" );
+            pointDie2Img = document.getElementById( "pointDie2" );
+            rollDie1Img = document.getElementById( "rollDie1" );
+            rollDie2Img = document.getElementById( "rollDie2" );
+            messages = document.getElementById( "messages" );
+            playButton = document.getElementById( "play" );
+            rollButton = document.getElementById( "roll" );
+
+           
+            rollButton.disabled = true; // deshabilitar botón de tirar
+            setImage( pointDie1Img ); 
+            setImage( pointDie2Img ); 
+            setImage( rollDie1Img ); 
+            setImage( rollDie2Img ); 
+
+            myPoint = 0;
+            firstRoll(); 
+         } 
+
+         
+         function firstRoll()
+         {
+            var sumOfDice = rollDice(); 
+
+           
+            switch (sumOfDice) 
+            {
+               case 7: case 11: 
+                  messages.innerHTML = 
+                     "¡Tú ganas! Haz clic en Reproducir para volver a jugar";
+                  break;
+               case 2: case 3: case 12: // lose on first roll
+                  messages.innerHTML = 
+                     "Lo siento. Pierdes. Haz clic en Reproducir para volver a jugar";
+                  break;
+               default:
+                  myPoint = sumOfDice;
+                  setImage( pointDie1Img, die1Value );
+                  setImage( pointDie2Img, die2Value );
+                  messages.innerHTML = "Tirar de nuevo!";
+                  rollButton.disabled = false; 
+                  playButton.disabled = true; 
+                  break;
+            } 
+         } 
+
+        
+         function rollAgain()
+         {
+            var sumOfDice = rollDice(); // subsequent roll of the dice
+
+            if (sumOfDice == myPoint) 
+            {
+               messages.innerHTML =
+                  "¡Tú ganas! Haz clic en Reproducir para volver a jugar";
+               rollButton.disabled = true; // disable rollButton
+               playButton.disabled = false; // enable playButton
+            } // end if
+            else if (sumOfDice == 7) // craps
+            {
+               messages.innerHTML = 
+                  "Lo siento. Pierdes. Haz clic en Reproducir para volver a jugar";
+               rollButton.disabled = true; // disable rollButton
+               playButton.disabled = false; // enable playButton
+            } // end else if
+         } // end function rollAgain
+
+         // roll the dice
+         function rollDice() 
+         {
+            dicerolling.play(); // play dice rolling sound
+
+            // clear old die images while rolling sound plays
+            die1Value = NaN;
+            die2Value = NaN;
+            showDice();
+	    
+            die1Value = Math.floor(1 + Math.random() * 6);
+            die2Value = Math.floor(1 + Math.random() * 6);
+            return die1Value + die2Value;
+         } // end function rollDice
+
+         // display rolled dice
+         function showDice()
+         {
+            setImage( rollDie1Img, die1Value );
+            setImage( rollDie2Img, die2Value );
+         } // end function showDice
+
+         // set image source for a die
+         function setImage( dieImg, dieValue ) 
+         {
+            if ( isFinite( dieValue ) )
+               dieImg.src = "die" + dieValue + ".png";
+            else
+               dieImg.src = "blank.png";
+         } // end function setImage
+
+         // register event liseners
+         function start()
+         {
+            var playButton = document.getElementById( "play" );
+            playButton.addEventListener( "click", startGame, false );
+            var rollButton = document.getElementById( "roll" );
+            rollButton.addEventListener( "click", rollAgain, false );
+            var diceSound = document.getElementById( "dicerolling" );
+            diceSound.addEventListener( "ended", showDice, false );
+         } // end function start
+
+         window.addEventListener( "load", start, false );
+      </script>
+   </head>
+   <body>
+      <audio id = "dicerolling" preload = "auto">
+         <source src = "http://test.deitel.com/dicerolling.mp3"
+            type = "audio/mpeg">
+         <source src = "http://test.deitel.com/dicerolling.ogg"
+            type = "audio/ogg">
+         El navegador no admite la etiqueta de audio</audio>
+      <p><a href = "Ejemplo 9.8.html">Haga clic aquí para ver un video corto
+         explicando las reglas básicas de Craps</a></p>
+      <div id = "pointDiv">
+         <p class = "point">El punto es:</p>
+         <img id = "pointDie1" src = "blank.png"  
+            alt = "Die 1 of Point Value">
+         <img id = "pointDie2" src = "blank.png"
+            alt = "Die 2 of Point Value">
+      </div>
+      <div class = "rollDiv">
+         <img id = "rollDie1" src = "blank.png" 
+            alt = "Die 1 of Roll Value">
+         <img id = "rollDie2" src = "blank.png" 
+            alt = "Die 2 of Roll Value">
+      </div>
+      <form action = "#">
+         <input id = "play" type = "button" value = "Jugar">
+         <input id = "roll" type = "button" value = "Tirar" disabled>
+      </form>
+      <p id = "messages" class = "red">Haga clic en Jugar para iniciar el juego</p>
+   </body>
+</html>

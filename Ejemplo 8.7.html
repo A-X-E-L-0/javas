@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<!-- Fig. 8.7: SwitchTest.html -->
+<!-- Uso de la sentencia de selección múltiple switch. -->
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>Cambiar entre formatos de lista HTML5</title>
+      <script>
+
+         var choice; 
+         var startTag; 
+         var endTag; 
+         var validInput = true; 
+         var listType; 
+
+         choice = window.prompt( "Seleccione un estilo de lista:\n" + 
+             "1 (numerado), 2 (letra), 3 (número romano)", "1" );
+              
+         switch ( choice )
+         {
+            case "1":
+               startTag = "<ol>";
+               endTag = "</ol>";
+               listType = "<h1>Lista numerada</h1>";
+               break;
+            case "2":
+               startTag = "<ol style = 'list-style-type: upper-alpha'>";
+               endTag = "</ol>";
+               listType = "<h1>Lista con letras</h1>";
+               break;
+            case "3":
+               startTag = "<ol style = 'list-style-type: upper-roman'>";
+               endTag = "</ol>";
+               listType = "<h1>Lista numerada romana</h1>";
+               break;
+            default:
+               validInput = false;          
+               break;
+         } //end switch
+     
+         if ( validInput === true )
+         {
+            document.writeln( listType + startTag );
+   
+            for ( var i = 1; i <= 3; ++i )
+               document.writeln( "<li>Elemento de la lista " + i + "</li>" );
+    
+            document.writeln( endTag );
+         } //end if
+         else
+            document.writeln( "Elección inválida: " + choice );
+
+      </script>
+   </head><body></body>
+</html>

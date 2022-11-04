@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<!-- Fig. 9.5: TiraDato.html -->
+<!-- Generación aleatoria de imágenes de dados usando Math.random. -->
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>RImágenes de dados aleatorios</title> 
+      <style type = "text/css">
+         li { display: inline; margin-right: 10px; }
+         ul { margin: 0; }
+      </style>
+      <script>
+         // variables utilizadas para interactuar con los elementos img
+         var die1Image;
+         var die2Image;
+         var die3Image;
+         var die4Image;
+
+         // registre el oyente del botón y obtenga los elementos img
+         function start()
+         {
+            var button = document.getElementById( "rollButton" );
+            button.addEventListener( "click", rollDice, false );
+            die1Image = document.getElementById( "die1" );
+            die2Image = document.getElementById( "die2" );
+            die3Image = document.getElementById( "die3" );
+            die4Image = document.getElementById( "die4" );
+         } // end function start
+
+         // roll the dice
+         function rollDice()
+         {
+            setImage( die1Image );
+            setImage( die2Image );
+            setImage( die3Image );
+            setImage( die4Image );
+         } // end function rollDice
+
+         // set src and alt attributes for a die
+         function setImage( dieImg )
+         {
+            var dieValue = Math.floor( 1 + Math.random() * 6 );
+            dieImg.setAttribute( "src", "die" + dieValue + ".png" );
+            dieImg.setAttribute( "alt", 
+               "die image with " + dieValue + " spot(s)" );
+         } // end function setImage
+
+         window.addEventListener( "load", start, false );
+      </script>
+   </head>
+   <body>
+      <form action = "#">
+         <input id = "rollButton" type = "button" value = "tirar dados">
+      </form>
+      <ol>
+         <li><img id = "die1" src = "blank.png" alt = "imagen en blanco"></li>
+         <li><img id = "die2" src = "blank.png" alt = "imagen en blanco"></li>
+         <li><img id = "die3" src = "blank.png" alt = "imagen en blanco"></li>
+         <li><img id = "die4" src = "blank.png" alt = "imagen en blanco"></li>
+      </ol>
+   </body>
+</html>

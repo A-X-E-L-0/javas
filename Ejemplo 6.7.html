@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<!-- Fig. 6.7: adición.html -->
+<!-- Script de adición. -->
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>Un Programa Adicional</title>
+      <script>
+
+         var  primerNumero ;  // primera cadena ingresada por el usuario
+         var  segundoNumero ;  // segunda cadena ingresada por el usuario
+         var  numero1 ;  // primer numero a sumar
+         var  numero2 ;  // segundo numero a sumar
+         var  suma ;  // suma de numero1 y numero2
+
+         // lee el primer número del usuario como una cadena
+         primerNumero = window.prompt( "Ingrese el primer número entero" );
+
+         // read in second number from user as a string
+         segundoNumero = window.prompt( "Ingrese el segundo número entero" );
+
+         // convertir números de cadenas a enteros
+         numero1 = parseInt( primerNumero ); 
+         numero2 = parseInt( segundoNumero );
+         
+         suma = numero1 + numero2; // suma los numeross
+
+         // mostrar los resultados
+         document.writeln( "<h1>La suma es " + suma + "</h1>" );
+
+      </script>
+   </head><body></body>
+</html>

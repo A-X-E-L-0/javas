@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<!-- Fig. 7.11: análisis.html -->
+<!-- Cálculo de los resultados del examen. -->
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>Análisis de los resultados del examen</title>
+      <script>
+
+         var passes = 0; 
+         var failures = 0; 
+         var student = 1;
+         var result; 
+
+        
+         while ( student <= 10 )
+         {
+            result = window.prompt( "Ingrese el resultado (1 = aprobado, 2 = fallido)", "0" );
+                
+            if ( result == "1" )
+               passes = passes + 1;
+            else
+               failures = failures + 1;
+
+            student = student + 1;
+         } // end while
+
+         // termination phase    
+         document.writeln( "<h1>Resultados del examen</h1>" );
+         document.writeln( "<p>Pasó: " + passes + 
+            "; Error: " + failures + "</p>" );
+
+         if ( passes > 8 )
+            document.writeln( "<p>Bono para el instructor!</p>" );
+
+      </script>
+   </head><body></body>
+</html>
